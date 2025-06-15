@@ -39,14 +39,12 @@ class ContactProfilePage extends StatelessWidget {
 
             // Profile image
 
- CircleAvatar(
+CircleAvatar(
   radius: 50,
   backgroundImage: NetworkImage(
-    'https://drive.google.com/uc?export=view&id=1S7JiI2rEr2RKWWc6yLUw4lpTWTnFA5O9',
+    'https://raw.githubusercontent.com/prakhar-1617/Flutter-assets/main/IMG_20250615_151349.jpg',
   ),
 ),
-            
-
             const SizedBox(height: 10),
 
             // Name
