@@ -3,8 +3,30 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(const MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: ContactProfilePage(),
+    home: HomePage(),
   ));
+}
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Home Page')),
+      body: Center(
+        child: ElevatedButton(
+          child: const Text('Go to Contact Profile'),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ContactProfilePage()),
+            );
+          },
+        ),
+      ),
+    );
+  }
 }
 
 class ContactProfilePage extends StatelessWidget {
@@ -21,10 +43,15 @@ class ContactProfilePage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
               child: Row(
-                children: const [
-                  Icon(Icons.arrow_back, size: 24),
-                  SizedBox(width: 16),
-                  Text(
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Icon(Icons.arrow_back, size: 24),
+                  ),
+                  const SizedBox(width: 16),
+                  const Text(
                     'Contact',
                     style: TextStyle(
                       fontSize: 20,
@@ -34,17 +61,15 @@ class ContactProfilePage extends StatelessWidget {
                 ],
               ),
             ),
-
             const SizedBox(height: 20),
 
             // Profile image
-
-CircleAvatar(
-  radius: 50,
-  backgroundImage: NetworkImage(
-    'https://raw.githubusercontent.com/prakhar-1617/Flutter-assets/main/IMG_20250615_151349.jpg',
-  ),
-),
+            const CircleAvatar(
+              radius: 50,
+              backgroundImage: NetworkImage(
+                'https://raw.githubusercontent.com/prakhar-1617/Flutter-assets/main/IMG_20250615_151349.jpg',
+              ),
+            ),
             const SizedBox(height: 10),
 
             // Name
@@ -64,19 +89,18 @@ CircleAvatar(
                 color: Colors.grey,
               ),
             ),
-
             const SizedBox(height: 20),
 
             // Contact Info
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Column(
-                children: [
+                children: const [
                   ContactTile(
                     icon: Icons.phone,
                     text: '+91 8115301987',
                   ),
-                  const SizedBox(height: 10),
+                  SizedBox(height: 10),
                   ContactTile(
                     icon: Icons.email,
                     text: 'prakharkumarcse@gmail.com',
