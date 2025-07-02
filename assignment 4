@@ -1,0 +1,161 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const StatePlaygroundApp());
+}
+
+class StatePlaygroundApp extends StatelessWidget {
+  const StatePlaygroundApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'State Playground',
+      theme: ThemeData.dark().copyWith(
+        scaffoldBackgroundColor: const Color(0xFF101210),
+        switchTheme: SwitchThemeData(
+          thumbColor: MaterialStateProperty.all(Colors.white),
+        ),
+      ),
+      home: const StatePlayground(),
+    );
+  }
+}
+
+class StatePlayground extends StatefulWidget {
+  const StatePlayground({super.key});
+
+  @override
+  State<StatePlayground> createState() => _StatePlaygroundState();
+}
+
+class _StatePlaygroundState extends State<StatePlayground> {
+  int _counter = 0;
+  bool _showWidget = false;
+  List<bool> _tasksChecked = [false, false, false];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold( 
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(18.0),
+          child: ListView(
+            children: [
+              const Align(
+                alignment: Alignment.centerRight,
+                child: Text(
+                  'Interactive Demo',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ),
+              const SizedBox(height: 20),
+
+              
+              const Text(
+                'Counter',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+              const Text('Tap the button to increment the counter.'),
+              const SizedBox(height: 10),
+              Text('Count: $_counter', style: const TextStyle(fontSize: 16)),
+              const SizedBox(height: 10),
+              Center(
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.greenAccent.shade400,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _counter++;
+                    });
+                  },
+                  child: const Text('Increment'),
+                ),
+              ),
+              const SizedBox(height: 30),
+              
+              const Text(
+                'Toggle Visibility',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+              const Text('Toggle the visibility of the widget below.'),
+              const SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  const Text('Show Widget', style: TextStyle(fontSize: 16)),
+                  Switch(
+                    value: _showWidget,
+                    onChanged: (value) {
+                      setState(() {
+                        _showWidget = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              if (_showWidget)
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.network(
+                    'https://raw.githubusercontent.com/prakhar-1617/Flutter-assets/main/widget.jpg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              const SizedBox(height: 30),
+
+              
+              const Text(
+                'Task List',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 4),
+              const Text('Mark tasks as completed by checking the boxes.'),
+              const SizedBox(height: 10),
+              CheckboxListTile(
+                title: const Text("Task 1: Buy groceries"),
+                value: _tasksChecked[0],
+                onChanged: (val) {
+                  setState(() {
+                    _tasksChecked[0] = val!;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.trailing,
+              ),
+              CheckboxListTile(
+                title: const Text("Task 2: Finish report"),
+                value: _tasksChecked[1],
+                onChanged: (val) {
+                  setState(() {
+                    _tasksChecked[1] = val!;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.trailing,
+              ),
+              CheckboxListTile(
+                title: const Text("Task 3: Call mom"),
+                value: _tasksChecked[2],
+                onChanged: (val) {
+                  setState(() {
+                    _tasksChecked[2] = val!;
+                  });
+                },
+                controlAffinity: ListTileControlAffinity.trailing,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
